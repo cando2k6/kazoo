@@ -687,7 +687,14 @@ set_module_name(N0, ?CARRIER_LOCAL=Name) ->
             LocalFeature -> LocalFeature
         end,
     N = set_feature(N0, ?FEATURE_LOCAL, Feature),
-    N#knm_phone_number{module_name = Name};
+    case N#knm_phone_number.is_billable of
+        undefined ->
+            N#knm_phone_number{module_name = Name
+                              ,is_billable = false
+                              };
+        _ ->
+            N#knm_phone_number{module_name = Name}
+    end;
 set_module_name(N, <<"wnm_", Name/binary>>) ->
     set_module_name(N, <<"knm_", Name/binary>>);
 set_module_name(N, Name=?NE_BINARY) ->
@@ -851,7 +858,7 @@ set_created(PN, Created)
 %% @doc
 %% @end
 %%--------------------------------------------------------------------
--spec is_billable(knm_phone_number()) -> boolean().
+-spec is_billable(knm_phone_number()) -> api_boolean().
 is_billable(#knm_phone_number{is_billable = IsBillable}) -> IsBillable.
 
 %%--------------------------------------------------------------------

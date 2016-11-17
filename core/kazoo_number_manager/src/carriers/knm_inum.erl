@@ -78,7 +78,7 @@ do_find_numbers_in_account(Prefix, Quantity, Offset, AccountId) ->
     ViewOptions = [{'startkey', [AccountId, ?NUMBER_STATE_AVAILABLE, Prefix]}
                   ,{'endkey', [AccountId, ?NUMBER_STATE_AVAILABLE, <<Prefix/binary,"\ufff0">>]}
                   ,{'limit', Quantity}
-                  ,{'skip', Offset}
+                  ,{'skip', Offset+1}
                   ,'include_docs'
                   ],
     case kz_datamgr:get_results(?KZ_INUM, <<"numbers_inum/status">>, ViewOptions) of

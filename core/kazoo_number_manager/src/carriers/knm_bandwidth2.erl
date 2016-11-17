@@ -116,7 +116,7 @@ query_local_bw_numbers(Number, Quantity, Options, AccountId)
     ViewOptions = [{'startkey', [?NUMBER_STATE_DISCOVERY, BW2Module, Number]}
                   ,{'endkey', [?NUMBER_STATE_DISCOVERY, BW2Module, <<"\ufff0">>]}
                   ,{'limit', Quantity}
-                  ,{skip, Offset}
+                  ,{skip, Offset+1}
                   ],
     case
         'undefined' /= (DB = knm_converters:to_db(Number))
